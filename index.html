@@ -3,97 +3,236 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Docsify-Guide with LaTeX and Image Support</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>zft的百宝箱</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A comprehensive guide to Docsify, including setup, features, and best practices.">
-    <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta name="author" content="Your Name">
     <meta name="keywords" content="Docsify, Documentation, JavaScript, Markdown, Guide, LaTeX, MathJax">
+    
+    <!-- 在CSS中添加响应式优化 -->
+    <style>
+        /* 基础样式 */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+    
+        /* 针对小屏幕设备的优化 (例如手机) */
+        @media (max-width: 600px) {
+            body {
+                font-size: 14px; /* 调整字体大小，提升可读性 */
+            }
+    
+            #app {
+                padding: 20px; /* 减少 padding，让内容在小屏幕上更紧凑 */
+            }
+    
+            h1, h2, h3 {
+                font-size: 1.5em; /* 减小标题尺寸，适应移动设备 */
+            }
+    
+            img {
+                max-width: 100%; /* 确保图片不会溢出容器 */
+                height: auto;
+            }
+        }
+    
+        /* 针对中等屏幕 (平板设备) */
+        @media (min-width: 600px) and (max-width: 1024px) {
+            body {
+                font-size: 15px;
+            }
+    
+            #app {
+                padding: 30px;
+            }
+    
+            h1, h2, h3 {
+                font-size: 1.75em;
+            }
+        }
+    </style>
+
     
     <!-- 设置浏览器图标 -->
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     
-    <!-- 默认主题 -->
+    <!-- 默认主题 - 使用 Docsify 自带的 Vue 主题 -->
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">
     
-    <!-- PrismJS 默认主题 -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/prismjs@1/themes/prism.css" />
+    <!-- 预加载 PrismJS 代码高亮样式，防止阻塞渲染 -->
+    <link rel="preload" href="//cdn.jsdelivr.net/npm/prismjs@1/themes/prism.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/prismjs@1/themes/prism.css"></noscript>
     
-    <!-- Gitalk支持 -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.css">
+    <!-- 预加载 Gitalk 评论系统样式 -->
+    <link rel="preload" href="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.css"></noscript>
+
     
     <!-- 内联样式 -->
     <style>
         body {
-            font-family: 'Roboto', sans-serif; /* Optional font */
+            font-family: 'Roboto', sans-serif;
+            margin: 0; /* 通常会重置默认的 body margin */
+            padding: 0; /* 确保页面样式的一致性 */
         }
         #app {
             text-align: center;
             padding: 50px;
-            font-size: 20px;
+            font-size: 1.25rem; /* 更具可维护性的字体单位 */
             color: #333;
         }
     </style>
 </head>
 
 <body>
-    <!-- 定义加载时候的动作 -->
-    <div id="app">加载中...</div>
-    
-    <!-- Gitalk评论容器 -->
-    <div id="gitalk-container"></div>
-    
-    <!-- Docsify 配置 -->
-    <script>
-        window.$docsify = {
-            name: 'Docsify-Guide',
-            repo: 'https://github.com/YSGStudyHards',
-            loadSidebar: true,
-            sidebarDisplayLevel: 1,
-            alias: {
-                '/.*/_sidebar.md': '/_sidebar.md'
+<!-- 定义加载时候的动作 -->
+<div id="app">加载中...</div>
+
+<!-- Gitalk评论容器 -->
+<div id="gitalk-container"></div>
+
+<!-- Docsify 配置 -->
+<script>
+    window.$docsify = {
+        name: 'Docsify-Guide',
+        repo: 'https://github.com/YSGStudyHards',
+        loadSidebar: true,
+        sidebarDisplayLevel: 1,
+        alias: {
+            '/.*/_sidebar.md': '/_sidebar.md'
+        },
+        loadNavbar: true,
+        coverpage: true,
+        maxLevel: 5,
+        subMaxLevel: 4,
+        mergeNavbar: true,
+        auto2top: true,
+        latex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$']],
+            customOptions: {}
+        },
+        pagination: {
+            previousText: '上一章节',
+            nextText: '下一章节',
+        },
+        search: {
+            maxAge: 86400000, // 过期时间：一天
+            paths: 'auto',
+            placeholder: '搜索',
+            noData: {
+                '/zh-cn/': '找不到结果',
+                '/': 'No results found'
             },
-            loadNavbar: true,
-            coverpage: true,
-            maxLevel: 5,
-            subMaxLevel: 4,
-            mergeNavbar: true,
-            auto2top: true,
-            latex: {
-                inlineMath   : [['$', '$'], ['\\(', '\\)']],
-                displayMath  : [['$$', '$$']],
-                customOptions: {}
-            },
-            pagination: {
-                previousText: '上一章节',
-                nextText: '下一章节',
-            },
-            search: {
-                maxAge: 86400000, // 过期时间，单位毫秒，默认一天
-                paths: 'auto',
-                placeholder: '搜索',
-                placeholder: {
-                    '/zh-cn/': '搜索',
-                    '/': 'Type to search'
-                },
-                noData: '找不到结果',
-                depth: 4,
-                hideOtherSidebarContent: false,
-                namespace: 'Docsify-Guide',
-            },
-            count: {
-                countable: true,
-                position: 'top',
-                margin: '10px',
-                float: 'right',
-                fontsize: '0.9em',
-                color: 'rgb(90,90,90)',
-                language: 'chinese',
-                isExpected: true
-            }
+            depth: 4,
+            hideOtherSidebarContent: false,
+            namespace: 'Docsify-Guide',
+        },
+        count: {
+            countable: true,
+            position: 'top',
+            margin: '10px',
+            float: 'right',
+            fontsize: '0.9em',
+            color: 'rgb(90,90,90)',
+            language: 'chinese',
+            isExpected: true
+        },
+        doneEach: function() {
+            document.getElementById('app').style.display = 'none';
         }
+    };
+</script>
+
+<!-- Gitalk支持，添加加载进度条 -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const gitalk = new Gitalk({
+            clientID: 'Your_GitHub_Client_ID',
+            clientSecret: 'Your_GitHub_Client_Secret',
+            repo: 'Your_GitHub_Repo',
+            owner: 'Your_GitHub_Username',
+            admin: ['Your_GitHub_Username'],
+            distractionFreeMode: false
+        });
+
+        // 显示加载进度条
+        const progressBar = document.getElementById('progress-bar');
+        progressBar.style.display = 'block';
+
+        // 渲染 Gitalk 评论，添加加载监听
+        gitalk.render('gitalk-container');
+
+        // 模拟进度条加载
+        let width = 0;
+        const interval = setInterval(() => {
+            if (width >= 100) {
+                clearInterval(interval);
+                progressBar.style.display = 'none'; // 隐藏进度条
+            } else {
+                width += 10; // 每次递增10%
+                progressBar.style.width = width + '%';
+            }
+        }, 300); // 模拟 300ms 的加载步长
+    });
+</script>
+
+<!-- 加载进度条样式 -->
+<style>
+    #app {
+        text-align: center;
+        padding: 50px;
+        font-size: 20px;
+        color: #333;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    /* 加载中的动画 */
+    #app:after {
+        content: '...';
+        display: inline-block;
+        animation: dots 1s steps(5, end) infinite;
+    }
+
+    @keyframes dots {
+        0%, 20% {
+            color: rgba(0,0,0,0);
+            text-shadow: .25em 0 0 rgba(0,0,0,0), .5em 0 0 rgba(0,0,0,0);
+        }
+        40% {
+            color: black;
+            text-shadow: .25em 0 0 rgba(0,0,0,0), .5em 0 0 rgba(0,0,0,0);
+        }
+        60% {
+            text-shadow: .25em 0 0 black, .5em 0 0 rgba(0,0,0,0);
+        }
+        80%, 100% {
+            text-shadow: .25em 0 0 black, .5em 0 0 black;
+        }
+    }
+
+    /* 进度条样式 */
+    #progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 5px;
+        background-color: #007bff;
+        z-index: 9999;
+        display: none;
+    }
+</style>
+
+<!-- 进度条 HTML -->
+<div id="progress-bar"></div>
+
 
         // Docsify插件，确保在文档更新后重新渲染MathJax公式和处理图片
         window.$docsify.plugins = [].concat(window.$docsify.plugins || [], function(hook) {
@@ -122,32 +261,60 @@
     <!-- 代码复制支持 -->
     <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js" async></script>
     
-    <!-- PrismJS 语言组件 -->
-    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-clike.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-javascript.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-markup.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-css.min.js"></script>
-    <!-- 添加其他需要的语言组件 -->
+    <!-- PrismJS 核心 -->
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1/prism.js" defer></script>
     
     <!-- docsify-pagination -->
-    <script src="//cdn.jsdelivr.net/npm/docsify-pagination@latest/dist/docsify-pagination.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify-pagination@latest/dist/docsify-pagination.min.js" defer></script>
     
-    <!-- Gitalk支持-->
-    <script src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+    <!-- Gitalk支持 -->
+    <script src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js" defer></script>
+    
+    <!-- 懒加载 PrismJS 语言组件 -->
     <script>
-        const gitalk = new Gitalk({
-            clientID: 'Your_GitHub_Client_ID', // 替换为你的 GitHub 应用 Client ID
-            clientSecret: 'Your_GitHub_Client_Secret', // 替换为你的 GitHub 应用 Client Secret
-            repo: 'Your_GitHub_Repo', // 替换为你的 GitHub 仓库名称
-            owner: 'Your_GitHub_Username', // 替换为你的 GitHub 用户名
-            admin: ['Your_GitHub_Username'], // 替换为你的 GitHub 用户名或合作者
-            // facebook-like distraction free mode
-            distractionFreeMode: false
-        })
-        gitalk.render('gitalk-container') // 确保在页面中有一个容器用于渲染Gitalk评论
+        document.addEventListener('DOMContentLoaded', function() {
+            let observer = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        let codeBlock = entry.target;
+                        let language = codeBlock.className.split('language-')[1];
+    
+                        if (language && !Prism.languages[language]) {
+                            // 动态加载 PrismJS 语言组件
+                            let script = document.createElement('script');
+                            script.src = `//cdn.jsdelivr.net/npm/prismjs@1/components/prism-${language}.min.js`;
+                            script.onload = function() {
+                                Prism.highlightElement(codeBlock); // 代码高亮
+                            };
+                            document.body.appendChild(script);
+                        } else {
+                            Prism.highlightElement(codeBlock); // 已加载的语言直接高亮
+                        }
+                        observer.unobserve(codeBlock); // 停止观察已处理的元素
+                    }
+                });
+            });
+    
+            // 观察页面中的所有代码块
+            document.querySelectorAll('pre code').forEach(codeBlock => {
+                observer.observe(codeBlock);
+            });
+        });
+    </script>
+    
+    <!-- Gitalk评论配置 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const gitalk = new Gitalk({
+                clientID: 'Your_GitHub_Client_ID', // 替换为你的 GitHub 应用 Client ID
+                clientSecret: 'Your_GitHub_Client_Secret', // 替换为你的 GitHub 应用 Client Secret
+                repo: 'Your_GitHub_Repo', // 替换为你的 GitHub 仓库名称
+                owner: 'Your_GitHub_Username', // 替换为你的 GitHub 用户名
+                admin: ['Your_GitHub_Username'], // 替换为你的 GitHub 用户名或合作者
+                distractionFreeMode: false
+            });
+            gitalk.render('gitalk-container'); // 确保在页面中有一个容器用于渲染Gitalk评论
+        });
     </script>
     
     <!-- 字数统计 -->
