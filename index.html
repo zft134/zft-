@@ -1,88 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no"
-    />
-    <meta
-      name="description"
-      content="A demonstration of docsify-themable: a delightfully simple theme system for docsify.js"
-    />
-    <title>Demo: docsify-themeable</title>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Docsify Documentation</title>
 
-    <!-- 1. Theme -->
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/docsify-themeable/dist/css/theme-simple.css"
-    />
-    <!-- <link rel="stylesheet" href="https://unpkg.com/docsify-themeable/dist/css/theme-simple-dark.css"> -->
-    <!-- <link rel="stylesheet" href="https://unpkg.com/docsify-themeable/dist/css/theme-defaults.css"> -->
+  <!-- Docsify Vue Theme -->
+  <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">
 
-    <!-- 2. PrismJS Themes -->
-    <!-- <link rel="stylesheet" href="https://unpkg.com/prism-github/prism-github.css"> -->
-    <!-- <link rel="stylesheet" href="https://unpkg.com/prism-theme-one-dark/prism-onedark.css"> -->
+  <!-- Google Fonts for a stylish look -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
-    <!-- 3. Custom Theme Properties -->
-    <style>
-      :root {
-        /* Reduce the font size */
-        /* --base-font-size: 14px; */
+  <!-- Favicon for branding -->
+  <link rel="icon" href="https://unpkg.com/docsify/images/favicon.ico" type="image/x-icon">
 
-        /* Change the theme color hue (0-360) */
-        /* --theme-hue: 325; */
+  <!-- Custom styles for better appearance -->
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+    /* Header customization */
+    .navbar {
+      background-color: #3F51B5;
+    }
+    .navbar .app-name {
+      color: white;
+    }
+    .navbar a:hover {
+      color: #FFEB3B;
+    }
+    /* Custom footer */
+    .sidebar-nav {
+      padding-bottom: 100px;
+    }
+    footer {
+      text-align: center;
+      padding: 25px 0;
+      background: #f5f5f5;
+      font-size: 14px;
+      border-top: 1px solid #ddd;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
 
-        /* Add sidebar navigation bullets */
-        /* --sidebar-nav-link-before-content-l1: "😀"; */
-        /* --sidebar-nav-link-before-content-l2: "💩"; */
+  <footer>
+    <p>Powered by Docsify | Created by <a href="https://github.com/your-username" target="_blank">Your Name</a></p>
+  </footer>
+
+  <script>
+    window.$docsify = {
+      name: 'My Documentation',
+      repo: 'https://github.com/your-username/your-repo',  // Fill in your repo URL
+      themeColor: '#3F51B5',
+      loadSidebar: true,   // Enable sidebar
+      loadNavbar: true,    // Enable navbar
+      subMaxLevel: 3,      // Show up to 3 levels in sidebar
+      search: {
+        maxAge: 86400000,  // Expiration time in ms (1 day)
+        placeholder: 'Search Documentation...',
+        noData: 'No results found!',
+        paths: 'auto',
+        depth: 2,
+      },
+      // Pagination for better UX
+      pagination: {
+        previousText: 'Previous',
+        nextText: 'Next',
+        crossChapter: true
       }
-    </style>
-  </head>
+    };
+  </script>
 
-  <body>
-    <div id="app"></div>
+  <!-- Docsify core -->
+  <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
 
-    <script>
-      // 4. Docsify Configuration
-      window.$docsify = {
-        name: "zft的百宝箱",
-        repo: "https://github.com/Minglu-Li/deep-learning",
-        coverpage: "coverpage.md",
-        homepage: "README.md",
-        // homepage   : 'https://raw.githubusercontent.com/jhildenbiddle/docsify-themeable/master/README.md',
-        loadSidebar: "_sidebar.md",
-        auto2top: true,
-        maxLevel: 3,
-        subMaxLevel: 3,
+  <!-- Docsify Search plugin -->
+  <script src="//unpkg.com/docsify/lib/plugins/search.min.js"></script>
 
-        // 5. docsify-themeable
-        themeable: {
-          // readyTransition : false,
-          // responsiveTables: false
-        }
-      };
-    </script>
+  <!-- Docsify Pagination plugin -->
+  <script src="//unpkg.com/docsify/lib/plugins/pagination.min.js"></script>
 
-    <!-- Required: docsify + docsify-themeable -->
-    <script src="https://unpkg.com/docsify/lib/docsify.min.js"></script>
-    <script src="https://unpkg.com/docsify-themeable"></script>
-
-    <!-- 6. Docsify Plugins -->
-    <script src="https://unpkg.com/docsify/lib/plugins/search.js"></script>
-    <!-- <script src="https://unpkg.com/docsify-copy-code"></script> -->
-    <!-- <script src="https://unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script> -->
-    <!-- <script src="https://unpkg.com/docsify/lib/plugins/zoom-image.min.js"></script> -->
-
-    <!-- 使得网页能够修饰latex公式 -->
-    <script src="//cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css" />
-    <script src="//cdn.jsdelivr.net/npm/marked@4"></script>
-
-    <!-- CDN files for docsify-katex -->
-    <script src="//cdn.jsdelivr.net/npm/docsify-katex@latest/dist/docsify-katex.js"></script>
-    <!-- <script src="//cdn.jsdelivr.net/gh/upupming/docsify-katex@latest/dist/docsify-katex.js"></script> -->
-
-  </body>
+  <!-- Docsify Zoom plugin for image zooming -->
+  <script src="//unpkg.com/docsify/lib/plugins/zoom-image.min.js"></script>
+</body>
 </html>
