@@ -63,6 +63,13 @@
             font-size: 1.25rem; /* 更具可维护性的字体单位 */
             color: #333;
         }
+
+        /* 高亮样式（可选，自定义<mark>的外观） */
+        mark {
+            background-color: yellow; /* 默认高亮颜色 */
+            padding: 0.2em;
+            border-radius: 0.2em;
+        }
     </style>
 
     <!-- 设置浏览器图标 -->
@@ -144,6 +151,46 @@
                 color: 'rgb(90,90,90)',
                 language: 'chinese',
                 isExpected: true
+            },
+            /* 
+               添加 markdown 配置以支持 ==文本== 高亮
+            */
+            markdown: {
+                // 使用 markdown-it 插件扩展 Docsify 的 Markdown 解析
+                extendMarkdown: function(md) {
+                    // 定义一个简单的插件来识别 ==文本== 语法
+                    md.inline.ruler.before('emphasis', 'highlight', function(state, silent) {
+                        let max = state.posMax;
+                        let start = state.pos;
+
+                        if (state.src.charCodeAt(start) !== 0x3D/* = */ ||
+                            state.src.charCodeAt(start + 1) !== 0x3D/* = */) {
+                            return false;
+                        }
+
+                        let pos = start + 2;
+
+                        while (pos < max) {
+                            if (state.src.charCodeAt(pos) === 0x3D/* = */ &&
+                                state.src.charCodeAt(pos + 1) === 0x3D/* = */) {
+                                if (!silent) {
+                                    let token = state.push('mark_open', 'mark', 1);
+                                    token.markup = '==';
+                                    token = state.push('text', '', 0);
+                                    token.content = state.src.slice(start + 2, pos);
+                                    token = state.push('mark_close', 'mark', -1);
+                                    token.markup = '==';
+                                }
+                                state.pos = pos + 2;
+                                return true;
+                            }
+                            pos++;
+                        }
+
+                        // 如果没有找到结束的 ==，则不处理
+                        return false;
+                    });
+                }
             },
             doneEach: function() {
                 document.getElementById('app').style.display = 'none';
